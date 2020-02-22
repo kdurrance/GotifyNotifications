@@ -13,9 +13,11 @@ Step 3. Update config.yml for this plugin with the Gotify configuration
 
 Sample config.yml
 
+```
 --- 
 # GotifyNotifications Configuration File
 server: "192.168.0.100"
 port: "8383"
 apptoken: "A95sRmQ0awaJUy4"
 ...
+```
