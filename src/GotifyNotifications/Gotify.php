@@ -45,22 +45,22 @@ class Gotify{
 
                 switch ($code) {
                     case "200":
-                        echo "<strong>Your Message was Submitted</strong>";
+                        #echo "<strong>Your Message was Submitted</strong>";
                         break;
                     case "400":
-                        echo "<strong>Bad Request</strong>";
+                        #echo "<strong>Bad Request</strong>";
                         break;
                     case "401":
-                        echo "<strong>Unauthorized Error - Invalid Token</strong>";
+                        #echo "<strong>Unauthorized Error - Invalid Token</strong>";
                         break;
                     case "403":
-                        echo "<strong>Forbidden</strong>";
+                        #echo "<strong>Forbidden</strong>";
                         break;
                     case "404":
-                        echo "<strong>API URL Not Found</strong>";
+                        #echo "<strong>API URL Not Found</strong>";
                         break;
                     default:
-                        echo "<strong>Hmm Something Went Wrong or HTTP Status Code is Missing</strong>";
+                        #echo "<strong>Hmm Something Went Wrong or HTTP Status Code is Missing</strong>";
                 }
 
 	}
