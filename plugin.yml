@@ -1,0 +1,19 @@
+#name, main, version and api are required
+name: GotifyNotifications
+main: GotifyNotifications\MainClass
+version: 0.0.9
+api: 3.0.0
+
+load: POSTWORLD
+author: Karl Durrance
+description: Post Pocketmine notifications to a Gotify server
+website: https://github.com/pmmp/ExamplePlugin
+commands:
+ example:
+  description: Gotify Notification plugin
+  usage: "/example"
+  permission: exampleplugin.command.example
+permissions:
+ exampleplugin.command.example:
+  description: "Allows the user to run the example command"
+  default: true
