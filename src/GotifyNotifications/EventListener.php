@@ -28,6 +28,9 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerKickEvent;
 use pocketmine\event\player\PlayerLoginEvent;
+use pocketmine\event\server\CommandEvent;
+use pocketmine\event\server\ServerCommandEvent;
+use pocketmine\event\server\LowMemoryEvent;
 
 class EventListener implements Listener{
 
@@ -41,16 +44,21 @@ class EventListener implements Listener{
 		$this->plugin = $plugin;
 	}
 
-	/**
-	 * @param PlayerRespawnEvent $event
-	 *
-	 * @priority        NORMAL
-	 * @ignoreCancelled false
-	 */
+	public function onCommand(CommandEvent $event) : void{
+		$this->plugin->notify->pushmsg($event->getSender()->getName() . " executed a command", $event->getCommand());
+	}
+
+	public function onServerCommand(ServerCommandEvent $event) : void{
+		$this->plugin->notify->pushmsg($event->getSender()->getName() . " executed a command", $event->getCommand());
+        }
+
+	public function onLowMem(LowMemoryEvent $event) : void{
+		$this->plugin->notify->pushmsg("Low Memory Warning", round($event->getMemory() / $event->getMemoryLimit() * 100, 2) . " [" . $event->getMemory() . " used bytes] [" . $event->getMemoryLimit() . " total bytes]");
+        }
 
 	public function onQuit(PlayerQuitEvent $event) : void{ 
 		$timeonline = $this->logintimes[$event->getPlayer()->getDisplayName()]->diff(new \DateTime("now"));
-		$this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " has logged out", "Time online: " . $timeonline->format('%i minutes %s seconds'));
+		$this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " logged out", "Time online: " . $timeonline->format('%i minutes and %s seconds'));
 		unset($this->logintimes[$event->getPlayer()->getDisplayName()]);
 	}
 
@@ -74,13 +82,13 @@ class EventListener implements Listener{
 	}
 
 	public function onKick(PlayerKickEvent $event) : void{
-		$this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " has was kicked", "IP:" . $event->getPlayer()->getAddress());
+		$this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " was kicked", "IP:" . $event->getPlayer()->getAddress());
 	}
 	
         public function onLogin(PlayerLoginEvent $event) : void{
 		$this->logintimes[$event->getPlayer()->getDisplayName()] = new \DateTime("now");
 		$operatorcheck = ($event->getPlayer()->isOp() == 1 ? "True" : "False");
-                $this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " has logged in", "[IP:" . $event->getPlayer()->getAddress() . "] [Ping:" . $event->getPlayer()->getPing() . "ms] [Is Op: " . $operatorcheck . "]");
+                $this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " logged in", "[IP: " . $event->getPlayer()->getAddress() . "] [Ping: " . $event->getPlayer()->getPing() . "ms] [Is Op: " . $operatorcheck . "]");
         }
 
 }
