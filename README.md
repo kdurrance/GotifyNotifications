@@ -5,9 +5,11 @@ Presently, the following events are pushed to Gotify:
 - PlayerJoinEvent
 - PlayerKickEvent
 - PlayerLoginEvent
+- PlayerGameModeChangeEvent
 - CommandEvent
 - ServerCommandEvent
 - LowMemoryEvent
+- UpdateNotifyEvent
 
 You need to have http access to a Gotify server for this plugin to work
 ```

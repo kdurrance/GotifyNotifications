@@ -28,9 +28,11 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerKickEvent;
 use pocketmine\event\player\PlayerLoginEvent;
+use pocketmine\event\player\PlayerGameModeChangeEvent;
 use pocketmine\event\server\CommandEvent;
 use pocketmine\event\server\ServerCommandEvent;
 use pocketmine\event\server\LowMemoryEvent;
+use pocketmine\event\server\UpdateNotifyEvent;
 
 class EventListener implements Listener{
 
@@ -43,6 +45,14 @@ class EventListener implements Listener{
 	public function __construct(MainClass $plugin){
 		$this->plugin = $plugin;
 	}
+
+	public function onGameModeChange(PlayerGameModeChangeEvent $event) : void{
+                $this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " changed game mode", "Gamemode: " . $this->getGamemodeStr($event->getNewGamemode()));
+        }
+
+	public function onUpdateAvailable(UpdateNotifyEvent $event) : void{
+                $this->plugin->notify->pushmsg("Pocketmine update availabled", $event->getUpdater()->getUpdateInfo()["details_url"]);
+        }
 
 	public function onCommand(CommandEvent $event) : void{
 		$this->plugin->notify->pushmsg($event->getSender()->getName() . " executed a command", $event->getCommand());
@@ -63,22 +73,7 @@ class EventListener implements Listener{
 	}
 
 	public function onJoin(PlayerJoinEvent $event) : void{ 
-		switch ($event->getPlayer()->getGamemode()) {
-    			case 0:
-        			$gamemode = "Survival";
-        			break;
-    			case 1:
-        			$gamemode = "Creative";
-        			break;
-    			case 2:
-        			$gamemode = "Adventure";
-        			break;
-			case 3:
-				$gamemode = "Spectator";
-				break;
-		}
-
-		$this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " joined the game", "Gamemode: " . $gamemode);
+		$this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " joined the game", "Gamemode: " . $this->getGamemodeStr($event->getPlayer()->getGamemode()));
 	}
 
 	public function onKick(PlayerKickEvent $event) : void{
@@ -91,4 +86,21 @@ class EventListener implements Listener{
                 $this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " logged in", "[IP: " . $event->getPlayer()->getAddress() . "] [Ping: " . $event->getPlayer()->getPing() . "ms] [Is Op: " . $operatorcheck . "]");
         }
 
+	public function getGamemodeStr(int $mode) {
+		switch ($mode) {
+                        case 0:
+                                return "Survival";
+                                break;
+                        case 1:
+                                return "Creative";
+                                break;
+                        case 2:
+                                return "Adventure";
+                                break;
+                        case 3:
+                                return "Spectator";
+                                break;
+                }
+	}
+	
 }
