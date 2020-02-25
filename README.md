@@ -7,7 +7,6 @@ Presently, the following events are pushed to Gotify:
 - PlayerLoginEvent
 - PlayerGameModeChangeEvent
 - CommandEvent
-- ServerCommandEvent
 - LowMemoryEvent
 - UpdateNotifyEvent
 
