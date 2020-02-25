@@ -30,7 +30,6 @@ use pocketmine\event\player\PlayerKickEvent;
 use pocketmine\event\player\PlayerLoginEvent;
 use pocketmine\event\player\PlayerGameModeChangeEvent;
 use pocketmine\event\server\CommandEvent;
-use pocketmine\event\server\ServerCommandEvent;
 use pocketmine\event\server\LowMemoryEvent;
 use pocketmine\event\server\UpdateNotifyEvent;
 
@@ -57,10 +56,6 @@ class EventListener implements Listener{
 	public function onCommand(CommandEvent $event) : void{
 		$this->plugin->notify->pushmsg($event->getSender()->getName() . " executed a command", $event->getCommand());
 	}
-
-	public function onServerCommand(ServerCommandEvent $event) : void{
-		$this->plugin->notify->pushmsg($event->getSender()->getName() . " executed a command", $event->getCommand());
-        }
 
 	public function onLowMem(LowMemoryEvent $event) : void{
 		$this->plugin->notify->pushmsg("Low Memory Warning", round($event->getMemory() / $event->getMemoryLimit() * 100, 2) . " [" . $event->getMemory() . " used bytes] [" . $event->getMemoryLimit() . " total bytes]");

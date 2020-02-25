@@ -2,21 +2,23 @@
 
 namespace GotifyNotifications;
 
-class Gotify{
+use pocketmine\utils\TextFormat;
 
+class Gotify{
 	private $server;
 	private $port;
 	private $apptoken;
+	private $plugin;
 
-	public function __construct($server, $port, $apptoken){
+	public function __construct($server, $port, $apptoken, $plugin){
 		# get config settings
 		$this->server = $server;
 		$this->port = $port;
 		$this->apptoken = $apptoken;
+		$this->plugin = $plugin;
 	}
 
 	public function pushmsg($title, $message){
-
                $data = [
                     "title"=> $title,
                     "message"=> $message,
@@ -45,23 +47,22 @@ class Gotify{
 
                 switch ($code) {
                     case "200":
-                        #echo "<strong>Your Message was Submitted</strong>";
+                        # Success! Log nothing.
                         break;
                     case "400":
-                        #echo "<strong>Bad Request</strong>";
+                        $this->plugin->getLogger()->info(TextFormat::DARK_RED . "400:Bad Request");
                         break;
                     case "401":
-                        #echo "<strong>Unauthorized Error - Invalid Token</strong>";
+			$this->plugin->getLogger()->info(TextFormat::DARK_RED . "401:Unauthorized Error - Invalid Token");
                         break;
                     case "403":
-                        #echo "<strong>Forbidden</strong>";
+			$this->plugin->getLogger()->info(TextFormat::DARK_RED . "403:Forbidden");
                         break;
                     case "404":
-                        #echo "<strong>API URL Not Found</strong>";
+			$this->plugin->getLogger()->info(TextFormat::DARK_RED . "404:API URL Not Found");
                         break;
                     default:
-                        #echo "<strong>Hmm Something Went Wrong or HTTP Status Code is Missing</strong>";
+			$this->plugin->getLogger()->info(TextFormat::DARK_RED . "HTTP Connection Failed");
                 }
-
 	}
 }

@@ -32,7 +32,7 @@ class MainClass extends PluginBase{
 		$this->port = $this->config->get("port");
 
 		$this->getLogger()->info(TextFormat::WHITE . "Gotify loaded");
-		$this->notify = new Gotify($this->server, $this->port, $this->apptoken);
+		$this->notify = new Gotify($this->server, $this->port, $this->apptoken, $this);
 	}
 
 	public function onEnable() : void{
