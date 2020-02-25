@@ -31,7 +31,6 @@ class MainClass extends PluginBase{
 		$this->apptoken = $this->config->get("apptoken");
 		$this->port = $this->config->get("port");
 
-		$this->getLogger()->info(TextFormat::WHITE . "Gotify loaded");
 		$this->notify = new Gotify($this->server, $this->port, $this->apptoken, $this);
 	}
 
