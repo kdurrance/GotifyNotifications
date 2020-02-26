@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace GotifyNotifications;
+namespace kdurrance\GotifyNotifications;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat;

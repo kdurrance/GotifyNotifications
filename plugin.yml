@@ -1,6 +1,6 @@
 #name, main, version and api are required
 name: GotifyNotifications
-main: GotifyNotifications\MainClass
+main: kdurrance\GotifyNotifications\MainClass
 version: 0.0.9
 api: 3.0.0
 

@@ -21,7 +21,7 @@
 
 declare(strict_types=1);
 
-namespace GotifyNotifications;
+namespace kdurrance\GotifyNotifications;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerQuitEvent;

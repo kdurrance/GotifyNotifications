@@ -1,6 +1,6 @@
 <?php
 
-namespace GotifyNotifications;
+namespace kdurrance\GotifyNotifications;
 
 use pocketmine\utils\TextFormat;
 
