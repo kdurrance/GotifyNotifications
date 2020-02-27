@@ -40,10 +40,23 @@ class Gotify{
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
 
-                $result = curl_exec($ch);
+		// create a multi-handle so we can do this asynchronously
+		$mh = curl_multi_init();
+		curl_multi_add_handle($mh,$ch);
+
+		// execute async call
+		do {
+    			$status = curl_multi_exec($mh, $active);
+    			if ($active) {
+        			curl_multi_select($mh);
+    			}
+		} while ($active && $status == CURLM_OK);
+
+		// get the response code
                 $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-                curl_close ($ch);
+                curl_multi_remove_handle($mh, $ch);
+                curl_multi_close($mh);
 
                 switch ($code) {
                     case "200":

@@ -9,7 +9,6 @@ use pocketmine\utils\TextFormat;
 use pocketmine\utils\Config;
 
 class MainClass extends PluginBase{
-
 	public $notify;
 	/** @var Config */ 	
 	private $config; 	
@@ -19,7 +18,6 @@ class MainClass extends PluginBase{
 	/** @var Config */
 
 	public function onLoad() : void{
-
 		if(!file_exists($this->getDataFolder())){
 			@mkdir($this->getDataFolder());
 		}
@@ -44,5 +42,4 @@ class MainClass extends PluginBase{
 		$this->getLogger()->info(TextFormat::DARK_RED . "Gotify disabled!");
 		$this->notify->pushmsg("Notifications disabled", $this->getServer()->getName()." (Minecraft ".$this->getServer()->getVersion().", Pocketmine ".$this->getServer()->getPocketMineVersion().")");
 	}
-
 }

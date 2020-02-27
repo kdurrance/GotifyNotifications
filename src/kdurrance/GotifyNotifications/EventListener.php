@@ -34,7 +34,6 @@ use pocketmine\event\server\LowMemoryEvent;
 use pocketmine\event\server\UpdateNotifyEvent;
 
 class EventListener implements Listener{
-
 	/** @var MainClass */
 	private $plugin;
 
@@ -46,7 +45,7 @@ class EventListener implements Listener{
 	}
 
 	public function onGameModeChange(PlayerGameModeChangeEvent $event) : void{
-                $this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " changed game mode", "Gamemode: " . $this->getGamemodeStr($event->getNewGamemode()));
+                $this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " changed game mode", "Gamemode: " . $event->getPlayer()->getServer()->getGamemodeName($event->getNewGamemode()));
         }
 
 	public function onUpdateAvailable(UpdateNotifyEvent $event) : void{
@@ -58,7 +57,7 @@ class EventListener implements Listener{
 	}
 
 	public function onLowMem(LowMemoryEvent $event) : void{
-		$this->plugin->notify->pushmsg("Low Memory Warning", round($event->getMemory() / $event->getMemoryLimit() * 100, 2) . " [" . $event->getMemory() . " used bytes] [" . $event->getMemoryLimit() . " total bytes]");
+		$this->plugin->notify->pushmsg("Low Memory Warning", round($event->getMemory() / $event->getMemoryLimit() * 100, 2) . "% used\r\n" . $event->getMemory() . " used bytes\r\n" . $event->getMemoryLimit() . " total bytes");
         }
 
 	public function onQuit(PlayerQuitEvent $event) : void{ 
@@ -68,7 +67,7 @@ class EventListener implements Listener{
 	}
 
 	public function onJoin(PlayerJoinEvent $event) : void{ 
-		$this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " joined the game", "Gamemode: " . $this->getGamemodeStr($event->getPlayer()->getGamemode()));
+		$this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " joined the game", "Gamemode: " . $event->getPlayer()->getServer()->getGamemodeName($event->getPlayer()->getGamemode()));
 	}
 
 	public function onKick(PlayerKickEvent $event) : void{
@@ -78,24 +77,6 @@ class EventListener implements Listener{
         public function onLogin(PlayerLoginEvent $event) : void{
 		$this->logintimes[$event->getPlayer()->getDisplayName()] = new \DateTime("now");
 		$operatorcheck = ($event->getPlayer()->isOp() == 1 ? "True" : "False");
-                $this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " logged in", "[IP: " . $event->getPlayer()->getAddress() . "] [Ping: " . $event->getPlayer()->getPing() . "ms] [Is Op: " . $operatorcheck . "]");
+                $this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " logged in", "IP: " . $event->getPlayer()->getAddress() . "\r\nPing: " . $event->getPlayer()->getPing() . "ms\r\nIs Op: " . $operatorcheck);
         }
-
-	public function getGamemodeStr(int $mode) {
-		switch ($mode) {
-                        case 0:
-                                return "Survival";
-                                break;
-                        case 1:
-                                return "Creative";
-                                break;
-                        case 2:
-                                return "Adventure";
-                                break;
-                        case 3:
-                                return "Spectator";
-                                break;
-                }
-	}
-	
 }
