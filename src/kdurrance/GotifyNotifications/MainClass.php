@@ -10,6 +10,7 @@ use pocketmine\utils\Config;
 
 class MainClass extends PluginBase{
 	public $notify;
+	private $disabled;
 	/** @var Config */ 	
 	private $config; 	
 	private $server;
@@ -29,17 +30,27 @@ class MainClass extends PluginBase{
 		$this->apptoken = $this->config->get("apptoken");
 		$this->port = $this->config->get("port");
 
+		if(empty($this->server) || empty($this->apptoken) || empty($this->port)){
+			$this->getLogger()->info(TextFormat::DARK_RED . "Bad config.yml, Gotify disabled!");
+			$this->disabled = true;
+			$this->setEnabled(false);
+			return;
+		}
+
 		$this->notify = new Gotify($this->server, $this->port, $this->apptoken, $this);
 	}
 
 	public function onEnable() : void{
-		$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-		$this->getLogger()->info(TextFormat::DARK_GREEN . "Gotify enabled [server:" . $this->server . "] [port:" . $this->port . "] [apptoken:" . $this->apptoken . "]");
-		$this->notify->pushmsg("Notifications enabled", $this->getServer()->getName()." (Minecraft ".$this->getServer()->getVersion().", Pocketmine ".$this->getServer()->getPocketMineVersion().")");
+		if(!$this->disabled){
+			$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
+			$this->getLogger()->info(TextFormat::DARK_GREEN . "Gotify enabled [server:" . $this->server . "] [port:" . $this->port . "] [apptoken:" . $this->apptoken . "]");
+			$this->notify->pushmsg("Notifications enabled", $this->getServer()->getName()." (Minecraft ".$this->getServer()->getVersion().", Pocketmine ".$this->getServer()->getPocketMineVersion().")");
+		}
 	}
 
 	public function onDisable() : void{
-		$this->getLogger()->info(TextFormat::DARK_RED . "Gotify disabled!");
-		$this->notify->pushmsg("Notifications disabled", $this->getServer()->getName()." (Minecraft ".$this->getServer()->getVersion().", Pocketmine ".$this->getServer()->getPocketMineVersion().")");
+		if(!$this->disabled){
+			$this->notify->pushmsg("Notifications disabled", $this->getServer()->getName()." (Minecraft ".$this->getServer()->getVersion().", Pocketmine ".$this->getServer()->getPocketMineVersion().")");
+		}
 	}
 }
