@@ -4,7 +4,7 @@ namespace kdurrance\GotifyNotifications;
 
 use pocketmine\utils\TextFormat;
 
-class Gotify{
+class Gotify {
 	private $server;
 	private $port;
 	private $apptoken;
