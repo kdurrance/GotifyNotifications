@@ -49,7 +49,7 @@ class MainClass extends PluginBase{
                         $pluginlist = "Enabled plugins:\r\n";
                         foreach($this->getServer()->getPluginManager()->getPlugins() as $plugin){
 			     if($plugin->isEnabled()){
-				     $pluginlist .= " - ".$plugin->getFullName()."\r\n";
+				     $pluginlist .= " - ".$plugin->getDescription()->getFullName()."\r\n";
 			     }
 		        }
 
