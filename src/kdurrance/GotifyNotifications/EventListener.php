@@ -50,8 +50,8 @@ class EventListener implements Listener{
                 if ($this->sentQuery == false) {
                     # get query information in a readable format
                     $servername = "Server name: ". $event->getServerName()."\r\n";
-                    $maxplayers = "Max player count: ". $event->getMaxPlayerCount()."\r\n";                    
-                    $map = "World: ". $event->getWorld()."\r\n";
+                    $maxplayers = "Max players: ". $event->getMaxPlayerCount()."\r\n";                    
+                    $map = "Default world: ". $event->getWorld()."\r\n";
 
                     # get a list of enabled plugins
                     $pluginlist = "Enabled plugins:\r\n";
