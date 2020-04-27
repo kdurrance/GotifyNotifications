@@ -45,15 +45,7 @@ class MainClass extends PluginBase{
 			$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 			$this->getLogger()->info(TextFormat::DARK_GREEN . "Gotify enabled [server:" . $this->server . "] [port:" . $this->port . "] [apptoken:" . $this->apptoken . "]");
 
-                        # get a list of enabled plugins for the startup message
-                        $pluginlist = "Enabled plugins:\r\n";
-                        foreach($this->getServer()->getPluginManager()->getPlugins() as $plugin){
-			     if($plugin->isEnabled()){
-				     $pluginlist .= " - ".$plugin->getDescription()->getFullName()."\r\n";
-			     }
-		        }
-
-                        $this->notify->pushmsg("Notifications enabled", $this->getServer()->getName()." (Minecraft ".$this->getServer()->getVersion().", Pocketmine ".$this->getServer()->getPocketMineVersion().")\r\n".$pluginlist);
+                        $this->notify->pushmsg("Notifications enabled", $this->getServer()->getName()." (Minecraft ".$this->getServer()->getVersion().", Pocketmine ".$this->getServer()->getPocketMineVersion().")");
 		}
 	}
 

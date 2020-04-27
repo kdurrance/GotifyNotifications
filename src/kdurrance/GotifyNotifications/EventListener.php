@@ -32,10 +32,12 @@ use pocketmine\event\player\PlayerGameModeChangeEvent;
 use pocketmine\event\server\CommandEvent;
 use pocketmine\event\server\LowMemoryEvent;
 use pocketmine\event\server\UpdateNotifyEvent;
+use pocketmine\event\server\QueryRegenerateEvent;
 
 class EventListener implements Listener{
 	/** @var MainClass */
 	private $plugin;
+        private $sentQuery = false;
 
 	/** record login times per loginid */
 	private $logintimes = array();
@@ -43,6 +45,27 @@ class EventListener implements Listener{
 	public function __construct(MainClass $plugin){
 		$this->plugin = $plugin;
 	}
+
+        public function onQueryRegenerate(QueryRegenerateEvent $event) : void{
+                if ($this->sentQuery == false) {
+                    # get query information in a readable format
+                    $servername = "Server name: ". $event->getServerName()."\r\n";
+                    $maxplayers = "Max player count: ". $event->getMaxPlayerCount()."\r\n";                    
+                    $map = "World: ". $event->getWorld()."\r\n";
+
+                    # get a list of enabled plugins
+                    $pluginlist = "Enabled plugins:\r\n";
+                  
+                    foreach($event->getPlugins() as $plugin){
+                         if($plugin->isEnabled()){
+                                 $pluginlist .= " - ".$plugin->getDescription()->getFullName()."\r\n";
+                         }
+                    }
+
+                    $this->plugin->notify->pushmsg("Server Query Information", $servername.$maxplayers.$map.$pluginlist);
+                    $this->sentQuery = true;
+                }
+        }
 
 	public function onGameModeChange(PlayerGameModeChangeEvent $event) : void{
                 $this->plugin->notify->pushmsg($event->getPlayer()->getDisplayName() . " changed game mode", "Gamemode: " . $event->getPlayer()->getServer()->getGamemodeName($event->getNewGamemode()));
