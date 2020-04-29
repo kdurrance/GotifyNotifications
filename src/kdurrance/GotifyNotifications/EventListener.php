@@ -37,6 +37,7 @@ use pocketmine\event\server\QueryRegenerateEvent;
 class EventListener implements Listener{
 	/** @var MainClass */
 	private $plugin;
+        private $pluginlist;
         private $sentQuery = false;
 
 	/** record login times per loginid */
@@ -48,21 +49,15 @@ class EventListener implements Listener{
 
         public function onQueryRegenerate(QueryRegenerateEvent $event) : void{
                 if ($this->sentQuery == false) {
-                    # get query information in a readable format
-                    $servername = "Server name: ". $event->getServerName()."\r\n";
-                    $maxplayers = "Max players: ". $event->getMaxPlayerCount()."\r\n";                    
-                    $map = "Default world: ". $event->getWorld()."\r\n";
 
                     # get a list of enabled plugins
-                    $pluginlist = "Enabled plugins:\r\n";
-                  
                     foreach($event->getPlugins() as $plugin){
                          if($plugin->isEnabled()){
-                                 $pluginlist .= " - ".$plugin->getDescription()->getFullName()."\r\n";
+                                 $this->pluginlist .= " - ".$plugin->getDescription()->getFullName()."\r\n";
                          }
                     }
 
-                    $this->plugin->notify->pushmsg("Server Query Information", $servername.$maxplayers.$map.$pluginlist);
+                    $this->plugin->notify->pushmsg("Enabled plugins", $this->pluginlist);
                     $this->sentQuery = true;
                 }
         }

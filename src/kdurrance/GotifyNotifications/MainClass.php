@@ -44,8 +44,16 @@ class MainClass extends PluginBase{
 		if(!$this->disabled){
 			$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
 			$this->getLogger()->info(TextFormat::DARK_GREEN . "Gotify enabled [server:" . $this->server . "] [port:" . $this->port . "] [apptoken:" . $this->apptoken . "]");
-
-                        $this->notify->pushmsg("Notifications enabled", $this->getServer()->getName()." (Minecraft ".$this->getServer()->getVersion().", Pocketmine ".$this->getServer()->getPocketMineVersion().")");
+                        
+                        $mcversion = "Minecraft version: ". $this->getServer()->getVersion()."\r\n";
+                        $pocketversion = "Pocketmine version: ". $this->getServer()->getPocketMineVersion()."\r\n";
+                        $ipport = "Listening on: ". $this->getServer()->getIp().":".$this->getServer()->getPort()."\r\n";
+                        $servername = "Server name: ". $this->getServer()->getMotd()."\r\n";
+                        $maxplayers = "Max players: ". $this->getServer()->getMaxPlayers()."\r\n";
+                        $map = "Default world: ". $this->getServer()->getDefaultLevel()->getName()."\r\n";
+                        $whitelist = "Whitelist enabled: ". ($this->getServer()->hasWhitelist() ? "True" : "False");
+      
+                        $this->notify->pushmsg("Server Started", $servername.$mcversion.$pocketversion.$ipport.$maxplayers.$map.$whitelist);
 		}
 	}
 
