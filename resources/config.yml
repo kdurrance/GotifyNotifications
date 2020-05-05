@@ -1,0 +1,6 @@
+--- 
+# GotifyNotifications Configuration File
+server: "192.168.0.100"
+port: "8383"
+apptoken: "A95sRmQ0awaJUy4"
+...
