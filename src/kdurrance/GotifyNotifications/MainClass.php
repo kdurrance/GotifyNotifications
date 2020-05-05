@@ -43,7 +43,6 @@ class MainClass extends PluginBase{
 	public function onEnable() : void{
 		if(!$this->disabled){
 			$this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-			$this->getLogger()->info(TextFormat::DARK_GREEN . "Gotify enabled [server:" . $this->server . "] [port:" . $this->port . "] [apptoken:" . $this->apptoken . "]");
                         
                         $mcversion = "Minecraft version: ". $this->getServer()->getVersion()."\r\n";
                         $pocketversion = "Pocketmine version: ". $this->getServer()->getPocketMineVersion()."\r\n";
