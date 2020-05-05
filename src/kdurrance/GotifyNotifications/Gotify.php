@@ -17,7 +17,7 @@ class Gotify {
 		$this->plugin = $plugin;
 
 		# create a thread  pool to manage the worker threads
-		$this->pool = new \Pool(4);
+		$this->pool = new \Pool(4, \Worker::class);
 	}
 
 	public function __destruct(){
