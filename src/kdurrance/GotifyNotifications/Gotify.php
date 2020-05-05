@@ -7,6 +7,7 @@ class Gotify {
 	private $port;
 	private $apptoken;
 	private $plugin;
+	private $pool;
 
 	public function __construct($server, $port, $apptoken, $plugin){
 		# get config settings
@@ -14,7 +15,15 @@ class Gotify {
 		$this->port = $port;
 		$this->apptoken = $apptoken;
 		$this->plugin = $plugin;
+
+		# create a thread  pool to manage the worker threads
+		$this->pool = new \Pool(4);
 	}
+
+	public function __destruct(){
+                # shutdown the thread pool
+                $this->pool->shutdown();
+        }
 
 	public function pushmsg($title, $message){
                $data = [
@@ -25,8 +34,7 @@ class Gotify {
 
                 $data_string = json_encode($data);
 
-                # kick off the worker thread to execute curl and send the payload to Gotify
-                $worker = new CurlWorker($this->server, $this->port, $this->apptoken, $data_string);
-                $worker ->start();
+		# submit a new task for the thread pool
+		$this->pool->submit(new CurlWorker($this->server, $this->port, $this->apptoken, $data_string));
 	}
 }

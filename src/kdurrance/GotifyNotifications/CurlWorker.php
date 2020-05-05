@@ -2,8 +2,6 @@
 
 namespace kdurrance\GotifyNotifications;
 
-use pocketmine\utils\TextFormat;
-
 class CurlWorker extends \Thread {
        private $server;
        private $port;
