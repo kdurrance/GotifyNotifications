@@ -1,5 +1,7 @@
 # Pocketmine plugin to send Pocketmine events to a Gotify notifications server
 
+![Gotify screenshot](https://github.com/kdurrance/GotifyNotifications/raw/master/Screenshot.jpg)
+
 Presently, the following events are pushed to Gotify:
 - PlayerQuitEvent
 - PlayerJoinEvent
