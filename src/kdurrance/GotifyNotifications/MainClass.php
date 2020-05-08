@@ -31,9 +31,8 @@ class MainClass extends PluginBase{
 		$this->port = $this->config->get("port");
 
 		if(empty($this->server) || empty($this->apptoken) || empty($this->port)){
-			$this->getLogger()->info(TextFormat::DARK_RED . "Bad config.yml, Gotify disabled!");
+			$this->getLogger()->error("Bad config.yml, Gotify disabled!");
 			$this->disabled = true;
-			$this->setEnabled(false);
 			return;
 		}
 
