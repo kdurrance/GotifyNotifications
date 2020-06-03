@@ -67,7 +67,7 @@ class EventListener implements Listener{
         }
 
 	public function onUpdateAvailable(UpdateNotifyEvent $event) : void{
-                $this->plugin->notify->pushmsg("Pocketmine update availabled", $event->getUpdater()->getUpdateInfo()["details_url"]);
+                $this->plugin->notify->pushmsg("Pocketmine update available", $event->getUpdater()->getUpdateInfo()["details_url"]);
         }
 
 	public function onCommand(CommandEvent $event) : void{
