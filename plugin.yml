@@ -1,7 +1,7 @@
 #name, main, version and api are required
 name: GotifyNotifications
 main: kdurrance\GotifyNotifications\MainClass
-version: 0.0.12
+version: 0.0.13
 api: 4.0.0
 
 load: POSTWORLD
